@@ -1,18 +1,15 @@
-package com.vladbytsyuk.weatherforecastproject.adapters;
+package com.vladbytsyuk.weatherforecastproject.view.adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
-import com.vladbytsyuk.weatherforecastproject.WeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 
 import java.util.ArrayList;
 
@@ -57,8 +54,8 @@ public class WeatherForecastAdapter extends BaseAdapter {
         viewHolder.textViewDayTemperature.setText(getItem(position).getTemperature().getDayTemperature().toString());
         viewHolder.textViewNightTemperature.setText(getItem(position).getTemperature().getNightTemperature().toString());
         viewHolder.imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);         // <------------------------------------- Place image here
-        viewHolder.textViewDate.setText(getItem(position).getTime().getDate());
-        viewHolder.textViewWeekday.setText(getItem(position).getTime().getWeekDay());
+        viewHolder.textViewDate.setText(getItem(position).getDay());
+        viewHolder.textViewDescription.setText(getItem(position).getDescription());
         return convertView;
     }
 
@@ -68,7 +65,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
         viewHolder.textViewNightTemperature = (TextView) convertView.findViewById(R.id.textViewWFNightTemperature);
         viewHolder.imageViewDescription = (ImageView) convertView.findViewById(R.id.imageViewWFDescription);
         viewHolder.textViewDate = (TextView) convertView.findViewById(R.id.textViewWFDate);
-        viewHolder.textViewWeekday = (TextView) convertView.findViewById(R.id.textViewWFWeekday);
+        viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewDescription);
         return viewHolder;
     }
 
@@ -77,7 +74,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
         TextView textViewNightTemperature;
         ImageView imageViewDescription;
         TextView textViewDate;
-        TextView textViewWeekday;
+        TextView textViewDescription;
     }
 
 }

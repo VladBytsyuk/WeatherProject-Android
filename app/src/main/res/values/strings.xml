@@ -10,8 +10,13 @@
     <string name="title_menu_settings">Settings</string>
     <string name="title_menu_info">Info</string>
 
-    <string name="settings">settings</string>
-    <string name="city">city</string>
-    <string name="metric">metric</string>
+    <string name="metric_title">Metric: </string>
+    <string-array name="metrics">
+        <item>Celsium</item>
+        <item>Farenheit</item>
+    </string-array>
+
+    <string name="download_error">Dowloading error</string>
+
     <string name="settings_title">Settings</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.vladbytsyuk.weatherforecastproject.activities;
+package com.vladbytsyuk.weatherforecastproject.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.vladbytsyuk.weatherforecastproject.fragments;
+package com.vladbytsyuk.weatherforecastproject.view.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -56,11 +56,11 @@ public class SettingsFragment extends Fragment {
     }
     private View spinnerMetricInit(View rootView) {
         spinnerMetric = (Spinner) rootView.findViewById(R.id.spinnerSettingsMetric);
-        String[] metrics = {"C", "F"};
+        String[] metrics = getResources().getStringArray(R.array.metrics);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, metrics);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMetric.setAdapter(adapter);
-        spinnerMetric.setPrompt("Metric: ");
+        spinnerMetric.setPrompt(getResources().getString(R.string.metric_title));
         spinnerMetric.setSelection(0);
         spinnerMetric.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -78,8 +78,10 @@ public class SettingsFragment extends Fragment {
 
 
     private void putSharedPreference(int key, String value) {
-        SharedPreferences settings = getActivity().getSharedPreferences(getString(R.string.settings), Context.MODE_PRIVATE);
+        SharedPreferences settings = getActivity().getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(getString(key), value).apply();
     }
+
+
 }

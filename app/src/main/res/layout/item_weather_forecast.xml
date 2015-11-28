@@ -81,11 +81,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weekday"
-            android:id="@+id/textViewWFWeekday"
+            android:text="Description"
+            android:id="@+id/textViewDescription"
             android:layout_below="@+id/textViewWFDate"
-            android:layout_alignRight="@+id/textViewWFDate"
-            android:layout_alignEnd="@+id/textViewWFDate" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 

@@ -1,4 +1,4 @@
-package com.vladbytsyuk.weatherforecastproject.fragments;
+package com.vladbytsyuk.weatherforecastproject.view.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
