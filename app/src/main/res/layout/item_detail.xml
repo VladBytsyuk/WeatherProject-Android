@@ -6,7 +6,6 @@
     android:paddingBottom="10dp"
     android:paddingTop="10dp">
 
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -20,25 +19,11 @@
             android:text="X \u2103"
             android:textSize="40dp"
             android:textStyle="bold"
-            android:id="@+id/textViewWFMaxTemperature" />
+            android:layout_centerVertical="true"
+            android:id="@+id/textViewDetailMaxTemperature" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Y \u2103"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            android:id="@+id/textViewWFMinTemperature" />
-
-    </LinearLayout>
 
     <FrameLayout
         android:layout_width="0dp"
@@ -48,7 +33,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/imageViewWFDescription" />
+            android:id="@+id/imageViewDetailDescription" />
 
     </FrameLayout>
 
@@ -56,24 +41,17 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="right"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:id="@+id/textViewWFDate"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Description"
-            android:id="@+id/textViewWFDescription"
-            android:layout_below="@+id/textViewWFDate"
+            android:textSize="20dp"
+            android:id="@+id/textViewDetailDayTime"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 

@@ -14,6 +14,8 @@
     <string name="day_temperature">day_temp</string>
     <string name="evening_temperature">ev_temp</string>
     <string name="night_temperature">night_temp</string>
+    <string name="min_temperature">min_temp</string>
+    <string name="max_temperature">max_temp</string>
     <string name="icon">icon</string>
     <string name="description">desc</string>
     <string name="wind_speed">wind_speed</string>

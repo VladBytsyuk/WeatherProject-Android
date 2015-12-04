@@ -2,6 +2,8 @@ package com.vladbytsyuk.weatherforecastproject.view.activities;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.InfoFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.SettingsFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.WeatherForecastFragment;
@@ -31,8 +34,9 @@ public class MainActivity extends AppCompatActivity
     private WeatherForecastFragment weatherForecastFragment;
     private Boolean isWeatherForecastFragmentActive;
 
+    private DBManager dbManager;
 
-
+/* ============================================ onCreate ======================================== */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,10 @@ public class MainActivity extends AppCompatActivity
         settingsFragment = new SettingsFragment();
         infoFragment = new InfoFragment();
         weatherForecastFragment = new WeatherForecastFragment();
+
+        dbManager = new DBManager(this);
+
+        if (getPreference(R.string.city) == null) setPreference(R.string.city, "Rostov");
 
         setWeatherForecastFragment();
 
@@ -74,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+/* ======================================= onBackPressed ======================================== */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+/* ================================= onCreateOptionsMenu ======================================== */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -124,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
+/* =============================== onNavigationItemSelected ===================================== */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -137,7 +145,9 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_refresh:
-
+                dbManager.drop();
+                dbManager.downloadWeather();
+                setWeatherForecastFragment();
                 break;
             case R.id.nav_settings:
                 setFragment(settingsFragment);
@@ -154,7 +164,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+/* ======================================== setFragment ========================================= */
     private void setWeatherForecastFragment() {
         setCurrentFragment(weatherForecastFragment);
         isWeatherForecastFragmentActive = true;
@@ -169,6 +179,21 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
+    }
+
+
+/* ==================================== Shared Preferences ====================================== */
+    private String getPreference(int preference) {
+        SharedPreferences settings = this
+                .getSharedPreferences(this.getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
+        return settings.getString(this.getString(preference), null);
+    }
+
+    private void setPreference(int key, String value) {
+        SharedPreferences settings = this
+                .getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(getString(key), value).apply();
     }
 
 }

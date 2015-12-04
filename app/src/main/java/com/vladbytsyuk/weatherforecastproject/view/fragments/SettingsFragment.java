@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
 
 /**
  * Created by VladBytsyuk on 22.11.2015.
@@ -26,7 +27,8 @@ public class SettingsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         rootView = viewInit(rootView);
         return rootView;
@@ -49,7 +51,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String city = editTextCity.getText().toString();
-                putSharedPreference(R.string.city, city);
+                setSharedPreference(R.string.city, city);
             }
         });
         return rootView;
@@ -57,7 +59,8 @@ public class SettingsFragment extends Fragment {
     private View spinnerMetricInit(View rootView) {
         spinnerMetric = (Spinner) rootView.findViewById(R.id.spinnerSettingsMetric);
         String[] metrics = getResources().getStringArray(R.array.metrics);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, metrics);
+        final ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, metrics);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMetric.setAdapter(adapter);
         spinnerMetric.setPrompt(getResources().getString(R.string.metric_title));
@@ -65,7 +68,7 @@ public class SettingsFragment extends Fragment {
         spinnerMetric.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                putSharedPreference(R.string.metric, adapter.getItem(position));
+                setSharedPreference(R.string.metric, adapter.getItem(position));
             }
 
             @Override
@@ -77,8 +80,9 @@ public class SettingsFragment extends Fragment {
     }
 
 
-    private void putSharedPreference(int key, String value) {
-        SharedPreferences settings = getActivity().getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
+    private void setSharedPreference(int key, String value) {
+        SharedPreferences settings = getActivity()
+                .getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(getString(key), value).apply();
     }

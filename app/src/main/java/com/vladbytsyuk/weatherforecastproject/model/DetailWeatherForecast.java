@@ -17,7 +17,7 @@ public class DetailWeatherForecast {
     }
 
     public DetailWeatherForecast(Integer windSpeed, Integer windDirection, Integer pressure,
-                                 Integer humidity, String description) {
+                                 Integer humidity) {
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
         this.pressure = pressure;

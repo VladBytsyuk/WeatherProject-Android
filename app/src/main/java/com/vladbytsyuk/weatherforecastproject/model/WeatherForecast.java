@@ -4,35 +4,27 @@ package com.vladbytsyuk.weatherforecastproject.model;
  * Created by VladBytsyuk on 23.11.2015.
  */
 public class WeatherForecast {
-    private Temperature temperature;
     private String day;
+    private Temperature temperature;
     private String icon;
     private String description;
     private DetailWeatherForecast detail;
 
     public WeatherForecast() {
-        this.temperature = new Temperature();
         this.day = null;
+        this.temperature = new Temperature();
         this.icon = null;
         this.description = null;
         this.detail = new DetailWeatherForecast();
     }
 
-    public WeatherForecast(Temperature temperature, String day, String icon,
+    public WeatherForecast( String day,Temperature temperature, String icon,
                            String description, DetailWeatherForecast detail) {
-        this.temperature = temperature;
         this.day = day;
+        this.temperature = temperature;
         this.icon = icon;
         this.description = description;
         this.detail = detail;
-    }
-
-    public Temperature getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Temperature temperature) {
-        this.temperature = temperature;
     }
 
     public String getDay() {
@@ -41,6 +33,14 @@ public class WeatherForecast {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public Temperature getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(Temperature temperature) {
+        this.temperature = temperature;
     }
 
     public String getIcon() {

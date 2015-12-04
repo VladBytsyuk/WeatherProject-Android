@@ -19,4 +19,9 @@
     <string name="download_error">Dowloading error</string>
 
     <string name="settings_title">Settings</string>
+
+    <string name="morning_time">Morning</string>
+    <string name="day_time">Day</string>
+    <string name="evening_time">Evening</string>
+    <string name="night_time">Night</string>
 </resources>

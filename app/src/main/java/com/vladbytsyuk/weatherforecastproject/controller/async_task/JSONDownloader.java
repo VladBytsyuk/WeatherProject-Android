@@ -1,4 +1,4 @@
-package com.vladbytsyuk.weatherforecastproject.controller;
+package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
 import android.widget.Toast;
 

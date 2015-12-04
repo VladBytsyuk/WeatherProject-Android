@@ -1,4 +1,4 @@
-package com.vladbytsyuk.weatherforecastproject.controller;
+package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
 import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.Temperature;
@@ -7,7 +7,10 @@ import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by BVS on 28.11.2015.
@@ -24,9 +27,11 @@ public class JSONParser {
                 WeatherForecast weatherForecast = new WeatherForecast();
 
                 JSONObject listElem = list.getJSONObject(it);
-                Integer dt =listElem.getInt("dt");
-                //TODO: parse this number to real date
-                weatherForecast.setDay(dt.toString());
+                Long dt = listElem.getLong("dt");
+                Date date = new Date(dt * 1000L);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyy");
+                String formattedDate = simpleDateFormat.format(date);
+                weatherForecast.setDay(formattedDate);
 
                 JSONObject temp = listElem.getJSONObject("temp");
                 Temperature temperature = new Temperature();
@@ -34,6 +39,8 @@ public class JSONParser {
                 temperature.setDayTemperature(Math.round(temp.getLong("day")));
                 temperature.setEveningTemperature(Math.round(temp.getLong("eve")));
                 temperature.setNightTemperature(Math.round(temp.getLong("night")));
+                temperature.setMinTemperature(Math.round(temp.getLong("min")));
+                temperature.setMaxTemperature(Math.round(temp.getLong("max")));
                 weatherForecast.setTemperature(temperature);
 
                 JSONArray weather = listElem.getJSONArray("weather");

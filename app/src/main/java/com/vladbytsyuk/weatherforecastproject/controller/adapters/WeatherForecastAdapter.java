@@ -1,4 +1,4 @@
-package com.vladbytsyuk.weatherforecastproject.view.adapters;
+package com.vladbytsyuk.weatherforecastproject.controller.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -51,9 +51,12 @@ public class WeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewDayTemperature.setText(getItem(position).getTemperature().getDayTemperature().toString());
-        viewHolder.textViewNightTemperature.setText(getItem(position).getTemperature().getNightTemperature().toString());
-        viewHolder.imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);         // <------------------------------------- Place image here
+        String maxTemperature = getItem(position).getTemperature().getMaxTemperature().toString();
+        String minTemperature = getItem(position).getTemperature().getMinTemperature().toString();
+        viewHolder.textViewMaxTemperature.setText(maxTemperature);
+        viewHolder.textViewMinTemperature.setText(minTemperature);
+        //TODO: Place image
+        viewHolder.imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);
         viewHolder.textViewDate.setText(getItem(position).getDay());
         viewHolder.textViewDescription.setText(getItem(position).getDescription());
         return convertView;
@@ -61,17 +64,17 @@ public class WeatherForecastAdapter extends BaseAdapter {
 
     private ViewHolder viewHolderInit(View convertView) {
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.textViewDayTemperature = (TextView) convertView.findViewById(R.id.textViewWFDayTemperature);
-        viewHolder.textViewNightTemperature = (TextView) convertView.findViewById(R.id.textViewWFNightTemperature);
+        viewHolder.textViewMaxTemperature = (TextView) convertView.findViewById(R.id.textViewWFMaxTemperature);
+        viewHolder.textViewMinTemperature = (TextView) convertView.findViewById(R.id.textViewWFMinTemperature);
         viewHolder.imageViewDescription = (ImageView) convertView.findViewById(R.id.imageViewWFDescription);
         viewHolder.textViewDate = (TextView) convertView.findViewById(R.id.textViewWFDate);
-        viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewDescription);
+        viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewWFDescription);
         return viewHolder;
     }
 
     static class ViewHolder {
-        TextView textViewDayTemperature;
-        TextView textViewNightTemperature;
+        TextView textViewMaxTemperature;
+        TextView textViewMinTemperature;
         ImageView imageViewDescription;
         TextView textViewDate;
         TextView textViewDescription;
