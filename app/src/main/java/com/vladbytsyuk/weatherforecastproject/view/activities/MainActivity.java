@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
             if (exitNow) {
                 super.onBackPressed();
             } else {
-                Toast.makeText(this, "Back", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.back), Toast.LENGTH_SHORT).show();
                 exitNow = true;
             }
         }

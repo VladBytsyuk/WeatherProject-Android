@@ -56,7 +56,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
         viewHolder.textViewMaxTemperature.setText(maxTemperature);
         viewHolder.textViewMinTemperature.setText(minTemperature);
         //TODO: Place image
-        viewHolder.imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);
+        viewHolder.imageViewDescription.setImageResource(getIcon(getItem(position)));
         viewHolder.textViewDate.setText(getItem(position).getDay().replace('-','.'));
         viewHolder.textViewDescription.setText(getItem(position).getDescription());
         return convertView;
@@ -70,6 +70,22 @@ public class WeatherForecastAdapter extends BaseAdapter {
         viewHolder.textViewDate = (TextView) convertView.findViewById(R.id.textViewWFDate);
         viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewWFDescription);
         return viewHolder;
+    }
+
+    private int getIcon(WeatherForecast weatherForecast) {
+        String icon = weatherForecast.getIcon();
+        switch (icon.substring(0, 2)) {
+            case "01" : return R.drawable.sun;
+            case "02" : return R.drawable.sun_cloud;
+            case "03" : return R.drawable.cloud;
+            case "04" : return R.drawable.light_rain;
+            case "09" : return R.drawable.rain;
+            case "10" : return R.drawable.hard_rain;
+            case "11" : return R.drawable.light;
+            case "13" : return R.drawable.snow;
+            case "50" : return R.drawable.fog;
+            default   : return R.drawable.sun_cloud;
+        }
     }
 
     static class ViewHolder {

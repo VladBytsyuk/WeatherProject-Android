@@ -4,10 +4,11 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/imageViewDetailDescription"
-        android:contentDescription="@string/icon"/>
+        android:contentDescription="@string/icon"
+        android:src="@drawable/sun_cloud"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:id="@+id/listViewDetail"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/textViewDetailTemperature"
         android:layout_alignRight="@+id/textViewDetailTemperature"
         android:layout_alignEnd="@+id/textViewDetailTemperature">
@@ -36,17 +37,11 @@
         android:layout_height="20dp"
         android:orientation="horizontal"
         android:id="@+id/linearLayoutWind"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/listViewDetail"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewDetailWind"
-            android:contentDescription="@string/icon"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,12 +65,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewDetailPressure"
-            android:contentDescription="@string/icon"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,12 +86,6 @@
         android:layout_below="@+id/linearLayoutPressure"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewDetailHumidity"
-            android:contentDescription="@string/icon"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -16,6 +16,8 @@
         <item>Farenheit</item>
     </string-array>
 
+    <string name="back">Press \"Back\" again to exit</string>
+
     <string name="download_error">Dowloading error</string>
 
     <string name="settings_title">Settings</string>

@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp">
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
-        android:layout_weight="1"
-        android:orientation="vertical">p
+        android:layout_weight="2"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,12 +28,13 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="2">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imageViewDetailDescription" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/imageViewDetailDescription"
+            android:src="@drawable/day"/>
 
     </FrameLayout>
 
@@ -41,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="right"
         >
 

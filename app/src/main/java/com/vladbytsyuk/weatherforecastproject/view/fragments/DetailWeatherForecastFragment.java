@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,7 @@ import android.widget.TextView;
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
 import com.vladbytsyuk.weatherforecastproject.controller.adapters.DetailWeatherForecastAdapter;
-import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
-import com.vladbytsyuk.weatherforecastproject.model.Temperature;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
-
-import java.io.BufferedReader;
 
 /**
  * Created by VladBytsyuk on 29.11.2015.
@@ -54,11 +49,11 @@ public class DetailWeatherForecastFragment extends Fragment {
         rootView = viewInit(rootView);
 
         if (weatherForecast != null) {
-            textViewTemperature.setText(weatherForecast.getTemperature().getMaxTemperature().toString());
+            textViewTemperature.setText(weatherForecast.getTemperature().getMaxTemperature().toString() + "\u2103");
             textViewWind.setText(weatherForecast.getDetail().getWindSpeed().toString());
             textViewPressure.setText(weatherForecast.getDetail().getPressure().toString());
             textViewHumidity.setText(weatherForecast.getDetail().getHumidity().toString());
-            imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);
+            imageViewDescription.setImageResource(R.drawable.sun_cloud);
             adapter = new DetailWeatherForecastAdapter(context, weatherForecast);
             listViewDetail.setAdapter(adapter);
         }
@@ -68,9 +63,6 @@ public class DetailWeatherForecastFragment extends Fragment {
 
     private View viewInit(View rootView) {
         imageViewDescription = (ImageView) rootView.findViewById(R.id.imageViewDetailDescription);
-        imageViewWind = (ImageView) rootView.findViewById(R.id.imageViewDetailWind);
-        imageViewPressure = (ImageView) rootView.findViewById(R.id.imageViewDetailPressure);
-        imageViewHumidity = (ImageView) rootView.findViewById(R.id.imageViewDetailHumidity);
         textViewTemperature = (TextView) rootView.findViewById(R.id.textViewDetailTemperature);
         textViewWind = (TextView) rootView.findViewById(R.id.textViewDetailWind);
         textViewPressure = (TextView) rootView.findViewById(R.id.textViewDetailPressure);

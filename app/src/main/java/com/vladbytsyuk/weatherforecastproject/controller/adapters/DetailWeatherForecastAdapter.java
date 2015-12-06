@@ -42,11 +42,21 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewDetailTemperature.setText(getItem(position).getTempeature().toString());
+        viewHolder.textViewDetailTemperature.setText(getItem(position).getTempeature().toString() + "\u2103");
         //TODO: Place image
-        viewHolder.imageViewDetailDescription.setImageResource(R.drawable.icon_menu_refresh);
+        viewHolder.imageViewDetailDescription.setImageResource(getIcon(position));
         viewHolder.textViewDetailDayTime.setText(getItem(position).getDayTime());
         return convertView;
+    }
+
+    private int getIcon(int position) {
+        switch (position) {
+            case 0  : return R.drawable.morning;
+            case 1  : return R.drawable.day;
+            case 2  : return R.drawable.evening;
+            case 3  : return R.drawable.night;
+            default : return R.drawable.day;
+        }
     }
 
     @Override
