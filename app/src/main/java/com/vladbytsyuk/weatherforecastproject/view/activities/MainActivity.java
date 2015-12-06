@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,18 +21,22 @@ import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
+import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.view.fragments.DetailWeatherForecastFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.InfoFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.SettingsFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.WeatherForecastFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, WeatherForecastFragment.OnItemPressed {
 
     private Boolean exitNow;
 
     private SettingsFragment settingsFragment;
     private InfoFragment infoFragment;
     private WeatherForecastFragment weatherForecastFragment;
+    private DetailWeatherForecastFragment detailWeatherForecastFragment;
     private Boolean isWeatherForecastFragmentActive;
 
     private DBManager dbManager;
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         settingsFragment = new SettingsFragment();
         infoFragment = new InfoFragment();
         weatherForecastFragment = new WeatherForecastFragment();
+        detailWeatherForecastFragment = new DetailWeatherForecastFragment();
 
         dbManager = new DBManager(this);
 
@@ -195,5 +201,25 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(getString(key), value).apply();
     }
+
+/* ====================================== OnItemPressed ========================================= */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        weatherForecastFragment.removeOnItemPressedListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        weatherForecastFragment.setOnItemPressedListener(this);
+    }
+
+    public void itemPressed(WeatherForecast weatherForecast) {
+        detailWeatherForecastFragment.getWeatherForecast(weatherForecast);
+        setFragment(detailWeatherForecastFragment);
+    }
+
+
 
 }

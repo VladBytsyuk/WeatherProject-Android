@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wind"/>
+            android:text="Wind: "/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pressure"/>
+            android:text="Pressure: "/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity"/>
+            android:text="Humidity: "/>
 
         <TextView
             android:layout_width="wrap_content"

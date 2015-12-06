@@ -1,5 +1,7 @@
 package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
+import android.util.Log;
+
 import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.Temperature;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;

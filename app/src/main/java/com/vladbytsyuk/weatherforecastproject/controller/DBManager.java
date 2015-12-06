@@ -1,12 +1,13 @@
 package com.vladbytsyuk.weatherforecastproject.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.vladbytsyuk.weatherforecastproject.R;
-import com.vladbytsyuk.weatherforecastproject.controller.async_task.ContextAndDB;
 import com.vladbytsyuk.weatherforecastproject.controller.async_task.WeatherDownloader;
 import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.Temperature;
@@ -38,7 +39,6 @@ public class DBManager extends SQLiteOpenHelper {
 
     public DBManager(Context context) {
         super(context, context.getResources().getString(R.string.db_name), null, 1);
-
         this.context = context;
         tableName = getString(R.string.db_name);
         setColumnTitles();
@@ -66,28 +66,30 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //tableName = getString(R.string.db_name);
+        //setColumnTitles();
         db.execSQL("create table " + tableName +
                         "(id integer primary key autoincrement, " +
-                        day + " text " +
-                        morningTemperature + " integer " +
-                        dayTemperature + " integer " +
-                        eveningTemperature + " integer " +
-                        nightTemperature + " integer " +
-                        minTemperature + " integer " +
-                        maxTemperature + " integer " +
-                        icon + " text " +
-                        description + " text " +
-                        windSpeed + " integer " +
-                        windDirection + " integer " +
-                        pressure + " integer " +
-                        humidity + " integer " +
+                        day + " text, " +
+                        morningTemperature + " integer, " +
+                        dayTemperature + " integer, " +
+                        eveningTemperature + " integer, " +
+                        nightTemperature + " integer, " +
+                        minTemperature + " integer, " +
+                        maxTemperature + " integer, " +
+                        icon + " text, " +
+                        description + " text, " +
+                        windSpeed + " integer, " +
+                        windDirection + " integer, " +
+                        pressure + " integer, " +
+                        humidity + " integer" +
                         ");"
         );
     }
 
     public void drop() {
         SQLiteDatabase database =  this.getReadableDatabase();
-        database.delete(getString(R.string.db_name), null, null);
+        database.delete(tableName, null, null);
         database.close();
     }
 
@@ -107,15 +109,46 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     public void downloadWeather() {
+        ArrayList<WeatherForecast> weatherForecasts;
         WeatherDownloader weatherDownloader = new WeatherDownloader();
-        weatherDownloader.execute(new ContextAndDB(context, this.getWritableDatabase()));
+        weatherDownloader.execute(context);
+        try {
+            weatherForecasts = weatherDownloader.get();
+            fillDataBase(weatherForecasts);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fillDataBase(ArrayList<WeatherForecast> weatherForecasts) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        for (WeatherForecast x : weatherForecasts) {
+            ContentValues cv = new ContentValues();
+
+            cv.put(day, x.getDay());
+            cv.put(morningTemperature, x.getTemperature().getMorningTemperature());
+            cv.put(dayTemperature, x.getTemperature().getDayTemperature());
+            cv.put(eveningTemperature, x.getTemperature().getEveningTemperature());
+            cv.put(nightTemperature, x.getTemperature().getNightTemperature());
+            cv.put(maxTemperature, x.getTemperature().getMaxTemperature());
+            cv.put(minTemperature, x.getTemperature().getMinTemperature());
+            cv.put(icon, x.getIcon());
+            cv.put(description, x.getDescription());
+            cv.put(windSpeed, x.getDetail().getWindSpeed());
+            cv.put(windDirection, x.getDetail().getWindDirection());
+            cv.put(pressure, x.getDetail().getPressure());
+            cv.put(humidity, x.getDetail().getHumidity());
+
+            database.insert(tableName, null, cv);
+        }
+        database.close();
     }
 
     public ArrayList<WeatherForecast> getWeatherForecasts() {
         ArrayList<WeatherForecast> weatherForecasts = new ArrayList<>();
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Cursor c = database.query(getString(R.string.db_name), null, null, null, null, null, null);
+        Cursor c = database.query(tableName, null, null, null, null, null, null);
         if (c.moveToFirst()) {
             Integer dateColumnIndex = c.getColumnIndex(day);
             Integer morningTemperatureColumnIndex = c.getColumnIndex(morningTemperature);

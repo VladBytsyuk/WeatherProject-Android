@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,12 @@ import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
+import com.vladbytsyuk.weatherforecastproject.controller.adapters.DetailWeatherForecastAdapter;
+import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.model.Temperature;
+import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
+
+import java.io.BufferedReader;
 
 /**
  * Created by VladBytsyuk on 29.11.2015.
@@ -20,10 +27,12 @@ import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
 public class DetailWeatherForecastFragment extends Fragment {
     private Context context;
     private DBManager dbManager;
+    private WeatherForecast weatherForecast;
 
     ImageView imageViewDescription;
     TextView textViewTemperature;
     ListView listViewDetail;
+    DetailWeatherForecastAdapter adapter;
     ImageView imageViewWind;
     TextView textViewWind;
     ImageView imageViewPressure;
@@ -31,16 +40,28 @@ public class DetailWeatherForecastFragment extends Fragment {
     ImageView imageViewHumidity;
     TextView textViewHumidity;
 
+    public void getWeatherForecast(WeatherForecast weatherForecast) {
+        this.weatherForecast = weatherForecast;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_weather_forecast ,container, false);
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         context = getActivity();
         dbManager = new DBManager(context);
 
         rootView = viewInit(rootView);
 
-
+        if (weatherForecast != null) {
+            textViewTemperature.setText(weatherForecast.getTemperature().getMaxTemperature().toString());
+            textViewWind.setText(weatherForecast.getDetail().getWindSpeed().toString());
+            textViewPressure.setText(weatherForecast.getDetail().getPressure().toString());
+            textViewHumidity.setText(weatherForecast.getDetail().getHumidity().toString());
+            imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);
+            adapter = new DetailWeatherForecastAdapter(context, weatherForecast);
+            listViewDetail.setAdapter(adapter);
+        }
 
         return rootView;
     }

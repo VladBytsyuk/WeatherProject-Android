@@ -5,7 +5,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:text="This application show weather to you."
         android:id="@+id/textViewInfoDescription"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Version"
+        android:text="v1.0"
         android:id="@+id/textViewInfoVersion"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -22,17 +22,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contacts"
-        android:id="@+id/textViewInfoContacts"
-        android:layout_above="@+id/textViewInfoThanks"
+        android:text="Thank you for use my application."
+        android:id="@+id/textViewInfoThanks"
+        android:layout_above="@+id/textViewInfoContact"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thanks"
-        android:id="@+id/textViewInfoThanks"
+        android:text="vladislav.bytsyuk@gmail.com"
+        android:id="@+id/textViewInfoContact"
         android:layout_above="@+id/textViewInfoVersion"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

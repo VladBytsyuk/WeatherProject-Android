@@ -51,13 +51,13 @@ public class WeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String maxTemperature = getItem(position).getTemperature().getMaxTemperature().toString();
-        String minTemperature = getItem(position).getTemperature().getMinTemperature().toString();
+        String maxTemperature = getItem(position).getTemperature().getMaxTemperature().toString() + "\u2103";
+        String minTemperature = getItem(position).getTemperature().getMinTemperature().toString() + "\u2103";
         viewHolder.textViewMaxTemperature.setText(maxTemperature);
         viewHolder.textViewMinTemperature.setText(minTemperature);
         //TODO: Place image
         viewHolder.imageViewDescription.setImageResource(R.drawable.icon_menu_refresh);
-        viewHolder.textViewDate.setText(getItem(position).getDay());
+        viewHolder.textViewDate.setText(getItem(position).getDay().replace('-','.'));
         viewHolder.textViewDescription.setText(getItem(position).getDescription());
         return convertView;
     }

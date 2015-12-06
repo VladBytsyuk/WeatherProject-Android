@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.model.DayTimeWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 
 import java.util.ArrayList;
@@ -18,11 +19,16 @@ import java.util.ArrayList;
  */
 public class DetailWeatherForecastAdapter extends BaseAdapter {
     Context context;
-    ArrayList<WeatherForecast> weatherForecastList;
+    ArrayList<DayTimeWeatherForecast> dayTimeWeatherForecasts;
 
-    public DetailWeatherForecastAdapter(Context context, ArrayList<WeatherForecast> weatherForecastList) {
+    public DetailWeatherForecastAdapter(Context context, WeatherForecast weatherForecast) {
         this.context = context;
-        this.weatherForecastList = weatherForecastList;
+        ArrayList<DayTimeWeatherForecast> buf = new ArrayList<>();
+        buf.add(new DayTimeWeatherForecast("Morning", weatherForecast.getTemperature().getMorningTemperature()));
+        buf.add(new DayTimeWeatherForecast("Day", weatherForecast.getTemperature().getDayTemperature()));
+        buf.add(new DayTimeWeatherForecast("Evening", weatherForecast.getTemperature().getEveningTemperature()));
+        buf.add(new DayTimeWeatherForecast("Night", weatherForecast.getTemperature().getNightTemperature()));
+        this.dayTimeWeatherForecasts = buf;
     }
 
     @Override
@@ -36,26 +42,11 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewDetailMaxTemperature.setText(getItem(position).getTemperature().getMaxTemperature());
+        viewHolder.textViewDetailTemperature.setText(getItem(position).getTempeature().toString());
         //TODO: Place image
         viewHolder.imageViewDetailDescription.setImageResource(R.drawable.icon_menu_refresh);
-        viewHolder.textViewDetailDayTime.setText(setDayTime(position));
+        viewHolder.textViewDetailDayTime.setText(getItem(position).getDayTime());
         return convertView;
-    }
-
-    private int setDayTime(int position) {
-        switch (position) {
-            case 0:
-                return R.string.morning_time;
-            case 1:
-                return R.string.day_time;
-            case 2:
-                return R.string.evening_time;
-            case 3:
-                return R.string.night_time;
-            default:
-                return 0;
-        }
     }
 
     @Override
@@ -64,25 +55,25 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
     }
 
     @Override
-    public WeatherForecast getItem(int position) {
-        return weatherForecastList.get(position);
+    public DayTimeWeatherForecast getItem(int position) {
+        return dayTimeWeatherForecasts.get(position);
     }
 
     @Override
     public int getCount() {
-        return weatherForecastList.size();
+        return dayTimeWeatherForecasts.size();
     }
 
     private ViewHolder viewHolderInit(View convertView) {
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.textViewDetailMaxTemperature = (TextView) convertView.findViewById(R.id.textViewDetailMaxTemperature);
+        viewHolder.textViewDetailTemperature = (TextView) convertView.findViewById(R.id.textViewDetailMaxTemperature);
         viewHolder.imageViewDetailDescription = (ImageView) convertView.findViewById(R.id.imageViewDetailDescription);
         viewHolder.textViewDetailDayTime = (TextView) convertView.findViewById(R.id.textViewDetailDayTime);
         return viewHolder;
     }
 
     static class ViewHolder {
-        TextView textViewDetailMaxTemperature;
+        TextView textViewDetailTemperature;
         ImageView imageViewDetailDescription;
         TextView textViewDetailDayTime;
     }
