@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;

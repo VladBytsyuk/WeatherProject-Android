@@ -1,5 +1,7 @@
 package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
@@ -17,7 +19,7 @@ public class JSONDownloader {
         String result = null;
         try {
             URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + city +
-                                "&units="+ "metric" +"&cnt=14&appid=2de143494c0b295cca9337e1e96b00e0");
+                                "&units=" + metric +"&cnt=14&appid=2de143494c0b295cca9337e1e96b00e0");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setReadTimeout(10000 /* milliseconds */);

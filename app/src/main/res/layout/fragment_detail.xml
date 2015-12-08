@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="X \u2103"
-        android:textSize="120dp"
+        android:textSize="70dp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -23,12 +23,11 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:id="@+id/listViewDetail"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/textViewDetailTemperature"
-        android:layout_alignRight="@+id/textViewDetailTemperature"
-        android:layout_alignEnd="@+id/textViewDetailTemperature">
+        android:layout_below="@+id/imageViewDetailDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
     </ListView>
 
@@ -98,5 +97,23 @@
             android:id="@+id/textViewDetailHumidity"/>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rain"
+        android:id="@+id/textViewDetailDescription"
+        android:layout_alignBottom="@+id/imageViewDetailDescription"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7 March"
+        android:id="@+id/textViewDetailDate"
+        android:layout_above="@+id/textViewDetailDescription"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

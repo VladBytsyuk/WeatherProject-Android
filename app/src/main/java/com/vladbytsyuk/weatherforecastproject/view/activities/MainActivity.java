@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
+import com.vladbytsyuk.weatherforecastproject.controller.async_task.JSONDownloader;
 import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.view.FormatWeather;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.DetailWeatherForecastFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.InfoFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.SettingsFragment;
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity
         toolbarAndNavigationDrawerInit();
 
         exitNow = false;
+        FormatWeather.setContext(this);
+
+        setPreference(R.string.metric, getString(R.string.celsium));
 
         settingsFragment = new SettingsFragment();
         infoFragment = new InfoFragment();

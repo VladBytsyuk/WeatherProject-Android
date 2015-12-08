@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.model.DayTimeWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.view.FormatWeather;
 
 import java.util.ArrayList;
 
@@ -42,21 +43,11 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewDetailTemperature.setText(getItem(position).getTempeature().toString() + "\u2103");
-        //TODO: Place image
-        viewHolder.imageViewDetailDescription.setImageResource(getIcon(position));
+        viewHolder.textViewDetailTemperature.setText(FormatWeather.temperatureToString(getItem(position).getTempeature()));
+
+        viewHolder.imageViewDetailDescription.setImageResource(FormatWeather.getDayTimeIcon(position));
         viewHolder.textViewDetailDayTime.setText(getItem(position).getDayTime());
         return convertView;
-    }
-
-    private int getIcon(int position) {
-        switch (position) {
-            case 0  : return R.drawable.morning;
-            case 1  : return R.drawable.day;
-            case 2  : return R.drawable.evening;
-            case 3  : return R.drawable.night;
-            default : return R.drawable.day;
-        }
     }
 
     @Override

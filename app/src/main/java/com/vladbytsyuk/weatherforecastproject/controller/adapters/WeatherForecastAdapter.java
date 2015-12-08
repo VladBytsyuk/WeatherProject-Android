@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.view.FormatWeather;
 
 import java.util.ArrayList;
 
@@ -51,14 +52,10 @@ public class WeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String maxTemperature = getItem(position).getTemperature().getMaxTemperature().toString() + "\u2103";
-        String minTemperature = getItem(position).getTemperature().getMinTemperature().toString() + "\u2103";
-        viewHolder.textViewMaxTemperature.setText(maxTemperature);
-        viewHolder.textViewMinTemperature.setText(minTemperature);
-        //TODO: Place image
-        viewHolder.imageViewDescription.setImageResource(getIcon(getItem(position)));
-        viewHolder.textViewDate.setText(getItem(position).getDay().replace('-','.'));
-        viewHolder.textViewDescription.setText(getItem(position).getDescription());
+        viewHolder.textViewMaxTemperature.setText(FormatWeather.temperatureToString(getItem(position).getTemperature().getMaxTemperature()));
+        viewHolder.textViewMinTemperature.setText(FormatWeather.temperatureToString(getItem(position).getTemperature().getMinTemperature()));
+        viewHolder.imageViewDescription.setImageResource(FormatWeather.getWeatherIcon(getItem(position)));
+        viewHolder.textViewDate.setText(FormatWeather.getDate(getItem(position).getDay()));
         return convertView;
     }
 
@@ -68,32 +65,16 @@ public class WeatherForecastAdapter extends BaseAdapter {
         viewHolder.textViewMinTemperature = (TextView) convertView.findViewById(R.id.textViewWFMinTemperature);
         viewHolder.imageViewDescription = (ImageView) convertView.findViewById(R.id.imageViewWFDescription);
         viewHolder.textViewDate = (TextView) convertView.findViewById(R.id.textViewWFDate);
-        viewHolder.textViewDescription = (TextView) convertView.findViewById(R.id.textViewWFDescription);
         return viewHolder;
     }
 
-    private int getIcon(WeatherForecast weatherForecast) {
-        String icon = weatherForecast.getIcon();
-        switch (icon.substring(0, 2)) {
-            case "01" : return R.drawable.sun;
-            case "02" : return R.drawable.sun_cloud;
-            case "03" : return R.drawable.cloud;
-            case "04" : return R.drawable.light_rain;
-            case "09" : return R.drawable.rain;
-            case "10" : return R.drawable.hard_rain;
-            case "11" : return R.drawable.light;
-            case "13" : return R.drawable.snow;
-            case "50" : return R.drawable.fog;
-            default   : return R.drawable.sun_cloud;
-        }
-    }
+
 
     static class ViewHolder {
         TextView textViewMaxTemperature;
         TextView textViewMinTemperature;
         ImageView imageViewDescription;
         TextView textViewDate;
-        TextView textViewDescription;
     }
 
 }

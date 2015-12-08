@@ -58,7 +58,7 @@ public class SettingsFragment extends Fragment {
     }
     private View spinnerMetricInit(View rootView) {
         spinnerMetric = (Spinner) rootView.findViewById(R.id.spinnerSettingsMetric);
-        String[] metrics = getResources().getStringArray(R.array.metrics);
+        final String[] metrics = getResources().getStringArray(R.array.metrics);
         final ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, metrics);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -68,7 +68,13 @@ public class SettingsFragment extends Fragment {
         spinnerMetric.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setSharedPreference(R.string.metric, adapter.getItem(position));
+                String currentMetric = adapter.getItem(position);
+                if (currentMetric.equals(metrics[0])) {
+                    setSharedPreference(R.string.metric, getActivity().getString(R.string.celsium));
+                } else {
+                    setSharedPreference(R.string.metric, getActivity().getString(R.string.farenheit));
+                }
+
             }
 
             @Override
