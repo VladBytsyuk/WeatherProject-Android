@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
@@ -27,20 +28,22 @@ public class WeatherForecastFragment extends Fragment {
     private DBManager dbManager;
     private TextView textViewCity;
     private ListView listView;
+    private ProgressBar progressBar;
     private WeatherForecastAdapter adapter;
 
     public interface OnItemPressed {
         void itemPressed(WeatherForecast weatherForecast);
     }
-    private OnItemPressed listener;
+    private OnItemPressed listener_item_pressed;
 
-    public void setOnItemPressedListener(OnItemPressed listener) {
-        this.listener = listener;
+    public void setOnItemPressedListener(OnItemPressed listener_item_pressed) {
+        this.listener_item_pressed = listener_item_pressed;
     }
 
     public void removeOnItemPressedListener() {
-        this.listener = null;
+        this.listener_item_pressed = null;
     }
+
 
     @Nullable
     @Override
@@ -53,17 +56,21 @@ public class WeatherForecastFragment extends Fragment {
         if (dbManager.isDBEmpty())
             dbManager.downloadWeather();
         textViewCity = (TextView) rootView.findViewById(R.id.textViewWeatherForecastCity);
+        textViewCity.setText(getPreference(R.string.city));
+
         listView = (ListView) rootView.findViewById(R.id.listViewWeatherForecast);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (listener != null)
-                    listener.itemPressed(adapter.getItem(position));
+                if (listener_item_pressed != null)
+                    listener_item_pressed.itemPressed(adapter.getItem(position));
             }
         });
-        textViewCity.setText(getPreference(R.string.city));
         adapter = new WeatherForecastAdapter(context, dbManager.getWeatherForecasts());
         listView.setAdapter(adapter);
+
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBarWeatherForecast);
+        progressBar.setVisibility(View.INVISIBLE);
 
         return rootView;
     }
@@ -74,4 +81,14 @@ public class WeatherForecastFragment extends Fragment {
         return settings.getString(getActivity().getString(preference), null);
     }
 
+
+    public void hideListView() {
+        listView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void showListView() {
+        progressBar.setVisibility(View.INVISIBLE);
+        listView.setVisibility(View.VISIBLE);
+    }
 }

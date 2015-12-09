@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     private InfoFragment infoFragment;
     private WeatherForecastFragment weatherForecastFragment;
     private DetailWeatherForecastFragment detailWeatherForecastFragment;
+
+    private Boolean isSettingsFragmentActive;
     private Boolean isWeatherForecastFragmentActive;
 
     private DBManager dbManager;
@@ -106,6 +110,9 @@ public class MainActivity extends AppCompatActivity
 
     private void onFragmentBackPressed() {
         if (!isWeatherForecastFragmentActive) {
+            if (!isSettingsFragmentActive) {
+                refresh();
+            }
             setWeatherForecastFragment();
         } else {
             if (exitNow) {
@@ -156,12 +163,10 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_refresh:
-                dbManager.drop();
-                dbManager.downloadWeather();
-                setWeatherForecastFragment();
+                refresh();
                 break;
             case R.id.nav_settings:
-                setFragment(settingsFragment);
+                setSettingsFragment();
                 break;
             case R.id.nav_info:
                 setFragment(infoFragment);
@@ -174,22 +179,39 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void refresh() {
+        weatherForecastFragment.hideListView();
+        setWeatherForecastFragment();
+        dbManager.drop();
+        dbManager.downloadWeather();
+        weatherForecastFragment.showListView();
+    }
+
 
 /* ======================================== setFragment ========================================= */
     private void setWeatherForecastFragment() {
         setCurrentFragment(weatherForecastFragment);
         isWeatherForecastFragmentActive = true;
+        isSettingsFragmentActive = false;
+    }
+
+    private void setSettingsFragment() {
+        setCurrentFragment(settingsFragment);
+        isSettingsFragmentActive = true;
+        isWeatherForecastFragmentActive = false;
     }
 
     private void setFragment(Fragment fragment) {
         setCurrentFragment(fragment);
         isWeatherForecastFragmentActive = false;
+        isSettingsFragmentActive = false;
     }
 
     private void setCurrentFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
+        exitNow = false;
     }
 
 
