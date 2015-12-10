@@ -25,10 +25,10 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
     public DetailWeatherForecastAdapter(Context context, WeatherForecast weatherForecast) {
         this.context = context;
         ArrayList<DayTimeWeatherForecast> buf = new ArrayList<>();
-        buf.add(new DayTimeWeatherForecast("Morning", weatherForecast.getTemperature().getMorningTemperature()));
-        buf.add(new DayTimeWeatherForecast("Day", weatherForecast.getTemperature().getDayTemperature()));
-        buf.add(new DayTimeWeatherForecast("Evening", weatherForecast.getTemperature().getEveningTemperature()));
-        buf.add(new DayTimeWeatherForecast("Night", weatherForecast.getTemperature().getNightTemperature()));
+        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.morning_time), weatherForecast.getTemperature().getMorningTemperature()));
+        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.day_time), weatherForecast.getTemperature().getDayTemperature()));
+        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.evening_time), weatherForecast.getTemperature().getEveningTemperature()));
+        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.night_time), weatherForecast.getTemperature().getNightTemperature()));
         this.dayTimeWeatherForecasts = buf;
     }
 

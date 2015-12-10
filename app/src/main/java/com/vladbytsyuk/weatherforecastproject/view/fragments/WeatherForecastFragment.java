@@ -82,12 +82,19 @@ public class WeatherForecastFragment extends Fragment {
     }
 
 
-    public void hideListView() {
+    public void refresh() {
+        hideListView();
+        dbManager.drop();
+        dbManager.downloadWeather();
+        showListView();
+    }
+
+    private void hideListView() {
         listView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void showListView() {
+    private void showListView() {
         progressBar.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.VISIBLE);
     }

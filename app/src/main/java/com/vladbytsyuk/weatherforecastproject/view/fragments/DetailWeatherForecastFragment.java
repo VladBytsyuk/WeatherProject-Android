@@ -26,15 +26,15 @@ public class DetailWeatherForecastFragment extends Fragment {
     private WeatherForecast weatherForecast;
 
     ImageView imageViewDescription;
+    ImageView imageViewWindDirection;
     TextView textViewTemperature;
     TextView textViewDate;
     TextView textViewDescription;
-    ListView listViewDetail;
-    DetailWeatherForecastAdapter adapter;
-    ImageView imageViewWind;
     TextView textViewWind;
     TextView textViewPressure;
     TextView textViewHumidity;
+    ListView listViewDetail;
+    DetailWeatherForecastAdapter adapter;
 
     public void getWeatherForecast(WeatherForecast weatherForecast) {
         this.weatherForecast = weatherForecast;
@@ -57,6 +57,7 @@ public class DetailWeatherForecastFragment extends Fragment {
             textViewPressure.setText(FormatWeather.getPressure(weatherForecast));
             textViewHumidity.setText(FormatWeather.getHumidity(weatherForecast));
             imageViewDescription.setImageResource(FormatWeather.getWeatherIcon(weatherForecast));
+            imageViewWindDirection.setImageResource(FormatWeather.getWindDirection(weatherForecast));
             adapter = new DetailWeatherForecastAdapter(context, weatherForecast);
             listViewDetail.setAdapter(adapter);
         }
@@ -66,6 +67,7 @@ public class DetailWeatherForecastFragment extends Fragment {
 
     private View viewInit(View rootView) {
         imageViewDescription = (ImageView) rootView.findViewById(R.id.imageViewDetailDescription);
+        imageViewWindDirection = (ImageView) rootView.findViewById(R.id.imageViewDetailWindDirection);
         textViewTemperature = (TextView) rootView.findViewById(R.id.textViewDetailTemperature);
         textViewDate = (TextView) rootView.findViewById(R.id.textViewDetailDate);
         textViewDescription = (TextView) rootView.findViewById(R.id.textViewDetailDescription);

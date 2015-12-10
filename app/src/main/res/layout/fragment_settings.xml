@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Input city: "
+            android:text="@string/city_title"
             android:textSize="20dp"
             android:textStyle="bold"
             android:id="@+id/textViewSettingsInputCity"
@@ -39,7 +39,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/save"
             android:layout_alignParentRight="true"
             android:id="@+id/buttonSettingsSaveCity"/>
 
@@ -54,7 +54,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select metric: "
+            android:text="@string/metric_title"
             android:textSize="20dp"
             android:textStyle="bold" />
 

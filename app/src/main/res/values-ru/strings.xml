@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+    <string name="lang">ru</string>
+
+    <string name="navigation_drawer_open">Открыть панель навигации</string>
+    <string name="navigation_drawer_close">Закрыть панель навигации</string>
+
+    <string name="action_settings">Настройки</string>
+
+    <string name="title_menu_refresh">Обновить</string>
+    <string name="title_menu_settings">Настройки</string>
+    <string name="title_menu_info">Информация</string>
+
+    <string name="city_title">Город:</string>
+    <string name="save">Сохранить</string>
+    <string name="metric_title">Температура: </string>
+    <string-array name="metrics">
+        <item>Цельсии</item>
+        <item>Фаренгейты</item>
+    </string-array>
+
+    <string name="back">Нажмите \"Назад\" ещё раз чтобы выйти</string>
+
+    <string name="download_error">Ошибка загрузки</string>
+
+    <string name="settings_title">Настройки</string>
+
+    <string name="morning_time">Утро</string>
+    <string name="day_time">День</string>
+    <string name="evening_time">Вечер</string>
+    <string name="night_time">Ночь</string>
+
+    <string-array name="months">
+        <item>Января</item>
+        <item>Февраля</item>
+        <item>Марта</item>
+        <item>Апреля</item>
+        <item>Мая</item>
+        <item>Июня</item>
+        <item>Июля</item>
+        <item>Августа</item>
+        <item>Сентября</item>
+        <item>Октября</item>
+        <item>Ноября</item>
+        <item>Декабря</item>
+    </string-array>
+
+    <string name="wind">Ветер: </string>
+    <string name="pres">Давление: </string>
+    <string name="hum">Влажность: </string>
+
+    <string name="meter_per_second">м/с</string>
+    <string name="miles_per_hour">миля/ч</string>
+    <string name="presssure_units">мм рт. ст.</string>
+</resources>

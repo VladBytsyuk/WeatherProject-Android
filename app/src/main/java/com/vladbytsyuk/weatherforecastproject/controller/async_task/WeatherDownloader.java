@@ -24,7 +24,8 @@ public class WeatherDownloader extends AsyncTask<Context, Void, ArrayList<Weathe
         context = params[0];
         String city = getPreference(R.string.city);
         String metric = getPreference(R.string.metric);
-        String jsonFile = JSONDownloader.downloadJSON(city, metric);
+        String lang = getString(R.string.lang);
+        String jsonFile = JSONDownloader.downloadJSON(city, metric, lang);
         ArrayList<WeatherForecast> weatherForecasts = JSONParser.parseJSON(jsonFile);
         return weatherForecasts;
     }

@@ -27,9 +27,25 @@
         android:id="@+id/listViewDetail"
         android:layout_below="@+id/imageViewDetailDescription"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true" />
 
-    </ListView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rain"
+        android:id="@+id/textViewDetailDescription"
+        android:layout_alignBottom="@+id/imageViewDetailDescription"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7 March"
+        android:id="@+id/textViewDetailDate"
+        android:layout_above="@+id/textViewDetailDescription"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,17 +56,25 @@
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/listViewDetail"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wind: "/>
+            android:text="@string/wind"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewDetailWind"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/imageViewDetailWindDirection"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/north"/>
 
     </LinearLayout>
 
@@ -67,7 +91,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pressure: "/>
+            android:text="@string/pres"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -89,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity: "/>
+            android:text="@string/hum"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -97,23 +121,5 @@
             android:id="@+id/textViewDetailHumidity"/>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rain"
-        android:id="@+id/textViewDetailDescription"
-        android:layout_alignBottom="@+id/imageViewDetailDescription"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="7 March"
-        android:id="@+id/textViewDetailDate"
-        android:layout_above="@+id/textViewDetailDescription"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

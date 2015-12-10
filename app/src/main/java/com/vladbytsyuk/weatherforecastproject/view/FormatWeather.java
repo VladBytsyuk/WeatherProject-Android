@@ -95,28 +95,51 @@ public class FormatWeather {
         String celsiumMetric = context.getString(R.string.celsium);
         String farenheitMetric = context.getString(R.string.farenheit);
         if (metric.equals(celsiumMetric)) {
-            units = "m/s";
+            units = context.getResources().getString(R.string.meter_per_second);
         } else if (metric.equals(farenheitMetric)) {
-            units = " MPH";
+            units = context.getResources().getString(R.string.miles_per_hour);
         } else {
-            units = "none";
+            units = "";
         }
-        return windSpeed.toString() + " " + units;
+        return " " + windSpeed.toString() + " " + units;
     }
 
     public static String getPressure(WeatherForecast weatherForecast) {
-        Integer pressure = weatherForecast.getDetail().getPressure();
-        return pressure.toString() + " hPa";
+        String units = context.getResources().getString(R.string.presssure_units);
+        Long pressure = weatherForecast.getDetail().getPressure().longValue();
+        if (context.getResources().getString(R.string.lang).equals("ru")) {
+            Double pressureRu = pressure * 0.750062;
+            pressure = Math.round(pressureRu);
+        }
+        return " " + pressure.toString() + " " + units;
     }
 
     public static String getHumidity(WeatherForecast weatherForecast) {
         Integer humidity = weatherForecast.getDetail().getHumidity();
-        return humidity.toString() + " %";
+        return " " + humidity.toString() + " %";
     }
 
     private String getSharedPreferenceString(int key) {
         SharedPreferences settings = context
                 .getSharedPreferences(context.getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
         return settings.getString(context.getString(key), null);
+    }
+
+    public static int getWindDirection(WeatherForecast weatherForecast) {
+        Integer direction = weatherForecast.getDetail().getWindDirection();
+        if ((direction >= 0 && direction < 45) || (direction >= 315 && direction <= 360)) {
+            return R.drawable.east;
+        } else if (direction >= 45 && direction < 135) {
+            return R.drawable.north;
+        } else if (direction >= 135 && direction < 225) {
+            return R.drawable.west;
+        } else if (direction >= 225 && direction < 315) {
+            return R.drawable.south;
+        } else
+            return R.drawable.sun;
+    }
+
+    private String getString(int id) {
+        return context.getResources().getString(id);
     }
 }

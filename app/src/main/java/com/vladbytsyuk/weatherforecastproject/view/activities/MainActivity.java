@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity
         FormatWeather.setContext(this);
 
         setPreference(R.string.metric, getString(R.string.celsium));
+        if (getString(R.string.lang).equals("ru")) {
+            setPreference(R.string.city, "Ростов-на-Дону");
+        } else {
+            setPreference(R.string.city, "Rostov");
+        }
 
         settingsFragment = new SettingsFragment();
         infoFragment = new InfoFragment();
@@ -76,15 +81,6 @@ public class MainActivity extends AppCompatActivity
     private void toolbarAndNavigationDrawerInit() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -110,10 +106,11 @@ public class MainActivity extends AppCompatActivity
 
     private void onFragmentBackPressed() {
         if (!isWeatherForecastFragmentActive) {
-            if (!isSettingsFragmentActive) {
+            if (isSettingsFragmentActive) {
                 refresh();
+            } else {
+                setWeatherForecastFragment();
             }
-            setWeatherForecastFragment();
         } else {
             if (exitNow) {
                 super.onBackPressed();
@@ -156,7 +153,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         }
@@ -173,18 +169,14 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void refresh() {
-        weatherForecastFragment.hideListView();
         setWeatherForecastFragment();
-        dbManager.drop();
-        dbManager.downloadWeather();
-        weatherForecastFragment.showListView();
+        weatherForecastFragment.refresh();
     }
 
 
