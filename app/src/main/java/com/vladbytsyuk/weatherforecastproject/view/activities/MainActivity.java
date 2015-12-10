@@ -33,7 +33,8 @@ import com.vladbytsyuk.weatherforecastproject.view.fragments.SettingsFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.WeatherForecastFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, WeatherForecastFragment.OnItemPressed {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                   WeatherForecastFragment.OnItemPressed {
 
     private Boolean exitNow;
 
@@ -57,13 +58,7 @@ public class MainActivity extends AppCompatActivity
 
         exitNow = false;
         FormatWeather.setContext(this);
-
-        setPreference(R.string.metric, getString(R.string.celsium));
-        if (getString(R.string.lang).equals("ru")) {
-            setPreference(R.string.city, "Ростов-на-Дону");
-        } else {
-            setPreference(R.string.city, "Rostov");
-        }
+        initSharedPreferences();
 
         settingsFragment = new SettingsFragment();
         infoFragment = new InfoFragment();
@@ -83,13 +78,24 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initSharedPreferences() {
+        if (getPreference(R.string.metric) == null) {
+            setPreference(R.string.metric, getString(R.string.celsium));
+        }
+        if (getString(R.string.lang).equals("ru")) {
+            setPreference(R.string.city, "Ростов-на-Дону");
+        } else {
+            setPreference(R.string.city, "Rostov");
+        }
     }
 
 
@@ -119,30 +125,6 @@ public class MainActivity extends AppCompatActivity
                 exitNow = true;
             }
         }
-    }
-
-
-/* ================================= onCreateOptionsMenu ======================================== */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 

@@ -64,7 +64,11 @@ public class SettingsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMetric.setAdapter(adapter);
         spinnerMetric.setPrompt(getResources().getString(R.string.metric_title));
-        spinnerMetric.setSelection(0);
+        if (getSharedPreference(R.string.metric).equals(getString(R.string.celsium))) {
+            spinnerMetric.setSelection(0);
+        } else {
+            spinnerMetric.setSelection(1);
+        }
         spinnerMetric.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -93,5 +97,9 @@ public class SettingsFragment extends Fragment {
         editor.putString(getString(key), value).apply();
     }
 
-
+    private String getSharedPreference(int preference) {
+        SharedPreferences settings = getActivity()
+                .getSharedPreferences(getActivity().getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
+        return settings.getString(this.getString(preference), null);
+    }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherForecastProject</string>
+    <string name="app_name">Weather</string>
     <string name="lang">en</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -52,4 +52,7 @@
     <string name="meter_per_second">m/s</string>
     <string name="miles_per_hour">MPH</string>
     <string name="presssure_units">hPa</string>
+
+    <string name="thanks">Thank you for use my application.</string>
+    <string name="information">This application show weather to you.</string>
 </resources>
