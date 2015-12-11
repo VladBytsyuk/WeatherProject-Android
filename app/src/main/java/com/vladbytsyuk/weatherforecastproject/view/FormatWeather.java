@@ -1,9 +1,9 @@
 package com.vladbytsyuk.weatherforecastproject.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 
 /**
@@ -43,9 +43,7 @@ public class FormatWeather {
 
     public static String temperatureToString(Integer temp) {
         String degrees = null;
-        SharedPreferences settings = context
-                .getSharedPreferences(context.getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        String metric = settings.getString(context.getString(R.string.metric), "");
+        String metric = PreferencesHelper.getPreference(R.string.metric, "");
         String celsiumMetric = context.getString(R.string.celsium);
         String farenheitMetric = context.getString(R.string.farenheit);
         if (metric.equals(celsiumMetric)) {
@@ -89,9 +87,7 @@ public class FormatWeather {
     public static String getWindSpeed(WeatherForecast weatherForecast) {
         Integer windSpeed = weatherForecast.getDetail().getWindSpeed();
         String units = null;
-        SharedPreferences settings = context
-                .getSharedPreferences(context.getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        String metric = settings.getString(context.getString(R.string.metric), "");
+        String metric = PreferencesHelper.getPreference(R.string.metric, "");
         String celsiumMetric = context.getString(R.string.celsium);
         String farenheitMetric = context.getString(R.string.farenheit);
         if (metric.equals(celsiumMetric)) {
@@ -117,12 +113,6 @@ public class FormatWeather {
     public static String getHumidity(WeatherForecast weatherForecast) {
         Integer humidity = weatherForecast.getDetail().getHumidity();
         return " " + humidity.toString() + " %";
-    }
-
-    private String getSharedPreferenceString(int key) {
-        SharedPreferences settings = context
-                .getSharedPreferences(context.getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        return settings.getString(context.getString(key), null);
     }
 
     public static int getWindDirection(WeatherForecast weatherForecast) {

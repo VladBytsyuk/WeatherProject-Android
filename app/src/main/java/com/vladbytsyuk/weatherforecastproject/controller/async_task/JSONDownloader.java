@@ -19,8 +19,13 @@ public class JSONDownloader {
     public static String downloadJSON(String city, String metric, String lang) {
         String result = null;
         try {
-            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + URLEncoder.encode(city, "UTF-8") +
-                                "&units=" + metric + "&lang=" + lang + "&cnt=14&appid=2de143494c0b295cca9337e1e96b00e0");
+            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?" +
+                                "q=" + URLEncoder.encode(city, "UTF-8") +
+                                "&units=" + metric +
+                                "&lang=" + lang +
+                                "&type=" + "accurate" +
+                                "&cnt=" + "14" +
+                                "&appid=" + "2de143494c0b295cca9337e1e96b00e0");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setReadTimeout(10000 /* milliseconds */);

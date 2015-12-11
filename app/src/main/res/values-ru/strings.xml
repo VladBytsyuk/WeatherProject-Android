@@ -6,6 +6,8 @@
     <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="navigation_drawer_close">Закрыть панель навигации</string>
 
+    <string name="input_city">Введите город:</string>
+
     <string name="action_settings">Настройки</string>
 
     <string name="title_menu_refresh">Обновить</string>
@@ -22,7 +24,8 @@
 
     <string name="back">Нажмите \"Назад\" ещё раз чтобы выйти</string>
 
-    <string name="download_error">Ошибка загрузки</string>
+    <string name="download_error">Нет подключения к сети.</string>
+    <string name="update">ОБНОВИТЬ</string>
 
     <string name="settings_title">Настройки</string>
 
@@ -56,4 +59,5 @@
 
     <string name="thanks">Спасибо за использование моего приложения.</string>
     <string name="information">Это приложение показывает Вам погоду.</string>
+
 </resources>

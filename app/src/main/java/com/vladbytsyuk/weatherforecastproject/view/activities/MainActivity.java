@@ -2,10 +2,7 @@ package com.vladbytsyuk.weatherforecastproject.view.activities;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -13,20 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
-import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
-import com.vladbytsyuk.weatherforecastproject.controller.async_task.JSONDownloader;
-import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.controller.NetworkHelper;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.view.FormatWeather;
+import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.DetailWeatherForecastFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.InfoFragment;
 import com.vladbytsyuk.weatherforecastproject.view.fragments.SettingsFragment;
@@ -34,7 +26,8 @@ import com.vladbytsyuk.weatherforecastproject.view.fragments.WeatherForecastFrag
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-                   WeatherForecastFragment.OnItemPressed {
+                   WeatherForecastFragment.OnItemPressed,
+                   WeatherForecastFragment.OnRefresh {
 
     private Boolean exitNow;
 
@@ -46,8 +39,6 @@ public class MainActivity extends AppCompatActivity
     private Boolean isSettingsFragmentActive;
     private Boolean isWeatherForecastFragmentActive;
 
-    private DBManager dbManager;
-
 /* ============================================ onCreate ======================================== */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +49,14 @@ public class MainActivity extends AppCompatActivity
 
         exitNow = false;
         FormatWeather.setContext(this);
+        PreferencesHelper.setContext(this);
+        NetworkHelper.setContext(this);
         initSharedPreferences();
 
         settingsFragment = new SettingsFragment();
         infoFragment = new InfoFragment();
         weatherForecastFragment = new WeatherForecastFragment();
         detailWeatherForecastFragment = new DetailWeatherForecastFragment();
-
-        dbManager = new DBManager(this);
-
-        if (getPreference(R.string.city) == null) setPreference(R.string.city, "Rostov");
 
         setWeatherForecastFragment();
 
@@ -88,13 +77,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initSharedPreferences() {
-        if (getPreference(R.string.metric) == null) {
-            setPreference(R.string.metric, getString(R.string.celsium));
+        if (PreferencesHelper.getPreference(R.string.metric) == null) {
+            PreferencesHelper.setPreference(R.string.metric, getString(R.string.celsium));
         }
-        if (getString(R.string.lang).equals("ru")) {
-            setPreference(R.string.city, "Ростов-на-Дону");
-        } else {
-            setPreference(R.string.city, "Rostov");
+        if (PreferencesHelper.getPreference(R.string.city) == null) {
+            if (getString(R.string.lang).equals("ru")) {
+                PreferencesHelper.setPreference(R.string.city, "Ростов-на-Дону");
+            } else {
+                PreferencesHelper.setPreference(R.string.city, "Rostov");
+            }
         }
     }
 
@@ -104,6 +95,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
+            exitNow = false;
             drawer.closeDrawer(GravityCompat.START);
         } else {
             onFragmentBackPressed();
@@ -130,6 +122,8 @@ public class MainActivity extends AppCompatActivity
 
 
 /* =============================== onNavigationItemSelected ===================================== */
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -162,7 +156,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-/* ======================================== setFragment ========================================= */
+    /* ======================================== setFragment ========================================= */
     private void setWeatherForecastFragment() {
         setCurrentFragment(weatherForecastFragment);
         isWeatherForecastFragmentActive = true;
@@ -189,36 +183,36 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-/* ==================================== Shared Preferences ====================================== */
-    private String getPreference(int preference) {
-        SharedPreferences settings = this
-                .getSharedPreferences(this.getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        return settings.getString(this.getString(preference), null);
-    }
-
-    private void setPreference(int key, String value) {
-        SharedPreferences settings = this
-                .getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(getString(key), value).apply();
-    }
-
-/* ====================================== OnItemPressed ========================================= */
+/* ====================================== Interfaces ============================================ */
     @Override
     protected void onPause() {
         super.onPause();
         weatherForecastFragment.removeOnItemPressedListener();
+        weatherForecastFragment.removeOnRefreshListener();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         weatherForecastFragment.setOnItemPressedListener(this);
+        weatherForecastFragment.setOnRefreshListener(this);
     }
 
     public void itemPressed(WeatherForecast weatherForecast) {
         detailWeatherForecastFragment.getWeatherForecast(weatherForecast);
         setFragment(detailWeatherForecastFragment);
+    }
+
+    public void showNetworkIssuesSnackbar() {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.main_container), R.string.download_error, Snackbar.LENGTH_LONG)
+                .setAction(R.string.update, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        refresh();
+                    }
+                });
+        snackbar.show();
     }
 
 

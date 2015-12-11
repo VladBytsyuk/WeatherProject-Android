@@ -1,8 +1,6 @@
 package com.vladbytsyuk.weatherforecastproject.view.fragments;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.vladbytsyuk.weatherforecastproject.R;
-import com.vladbytsyuk.weatherforecastproject.controller.DBManager;
+import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
 
 /**
  * Created by VladBytsyuk on 22.11.2015.
@@ -43,6 +41,7 @@ public class SettingsFragment extends Fragment {
 
     private View editTextCityInit(View rootView) {
         editTextCity = (EditText) rootView.findViewById(R.id.editTextSettingsCity);
+        editTextCity.setText(PreferencesHelper.getPreference(R.string.city));
         return rootView;
     }
     private View buttonSaveCityInit(View rootView) {
@@ -51,7 +50,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String city = editTextCity.getText().toString();
-                setSharedPreference(R.string.city, city);
+                PreferencesHelper.setPreference(R.string.city, city);
             }
         });
         return rootView;
@@ -64,7 +63,7 @@ public class SettingsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMetric.setAdapter(adapter);
         spinnerMetric.setPrompt(getResources().getString(R.string.metric_title));
-        if (getSharedPreference(R.string.metric).equals(getString(R.string.celsium))) {
+        if (PreferencesHelper.getPreference(R.string.metric).equals(getString(R.string.celsium))) {
             spinnerMetric.setSelection(0);
         } else {
             spinnerMetric.setSelection(1);
@@ -74,32 +73,17 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String currentMetric = adapter.getItem(position);
                 if (currentMetric.equals(metrics[0])) {
-                    setSharedPreference(R.string.metric, getActivity().getString(R.string.celsium));
+                    PreferencesHelper.setPreference(R.string.metric, getActivity().getString(R.string.celsium));
                 } else {
-                    setSharedPreference(R.string.metric, getActivity().getString(R.string.farenheit));
+                    PreferencesHelper.setPreference(R.string.metric, getActivity().getString(R.string.farenheit));
                 }
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         return rootView;
     }
 
-
-    private void setSharedPreference(int key, String value) {
-        SharedPreferences settings = getActivity()
-                .getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(getString(key), value).apply();
-    }
-
-    private String getSharedPreference(int preference) {
-        SharedPreferences settings = getActivity()
-                .getSharedPreferences(getActivity().getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        return settings.getString(this.getString(preference), null);
-    }
 }

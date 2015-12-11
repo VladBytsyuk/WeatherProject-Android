@@ -1,15 +1,11 @@
 package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
+import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
 
 import java.util.ArrayList;
 
@@ -22,18 +18,14 @@ public class WeatherDownloader extends AsyncTask<Context, Void, ArrayList<Weathe
     @Override
     protected ArrayList<WeatherForecast> doInBackground(Context... params) {
         context = params[0];
-        String city = getPreference(R.string.city);
-        String metric = getPreference(R.string.metric);
+        String city = PreferencesHelper.getPreference(R.string.city);
+        String metric = PreferencesHelper.getPreference(R.string.metric);
         String lang = getString(R.string.lang);
         String jsonFile = JSONDownloader.downloadJSON(city, metric, lang);
         ArrayList<WeatherForecast> weatherForecasts = JSONParser.parseJSON(jsonFile);
         return weatherForecasts;
     }
 
-    private String getPreference(int preference) {
-        SharedPreferences settings = context.getSharedPreferences(getString(R.string.shared_preferences_file_name), Context.MODE_PRIVATE);
-        return settings.getString(getString(preference), null);
-    }
 
     private String getString(int id) {
         return context.getResources().getString(id);
