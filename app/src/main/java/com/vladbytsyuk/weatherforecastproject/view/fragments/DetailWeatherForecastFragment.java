@@ -50,7 +50,8 @@ public class DetailWeatherForecastFragment extends Fragment {
         rootView = viewInit(rootView);
 
         if (weatherForecast != null) {
-            textViewTemperature.setText(FormatWeather.temperatureToString(weatherForecast.getTemperature().getMaxTemperature()));
+            textViewTemperature.setText(FormatWeather
+                    .temperatureToString(weatherForecast.getTemperature().getMaxTemperature()));
             textViewDate.setText(FormatWeather.getDate(weatherForecast.getDay()));
             textViewDescription.setText(weatherForecast.getDescription());
             textViewWind.setText(FormatWeather.getWindSpeed(weatherForecast));

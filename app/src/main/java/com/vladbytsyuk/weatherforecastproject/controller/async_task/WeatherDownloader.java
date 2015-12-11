@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.ResourceHelper;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
 
@@ -20,15 +21,10 @@ public class WeatherDownloader extends AsyncTask<Context, Void, ArrayList<Weathe
         context = params[0];
         String city = PreferencesHelper.getPreference(R.string.city);
         String metric = PreferencesHelper.getPreference(R.string.metric);
-        String lang = getString(R.string.lang);
+        String lang = ResourceHelper.getString(R.string.lang);
         String jsonFile = JSONDownloader.downloadJSON(city, metric, lang);
         ArrayList<WeatherForecast> weatherForecasts = JSONParser.parseJSON(jsonFile);
         return weatherForecasts;
-    }
-
-
-    private String getString(int id) {
-        return context.getResources().getString(id);
     }
 
 }

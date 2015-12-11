@@ -2,9 +2,11 @@ package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.ResourceHelper;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -43,6 +45,7 @@ public class JSONDownloader {
         }
         catch (Exception e) {
             e.printStackTrace();
+            Log.d(ResourceHelper.getString(R.string.log_tag), "Downloading error\n" + e.toString());
         }
         return result;
     }

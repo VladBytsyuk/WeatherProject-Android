@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.controller.NetworkHelper;
+import com.vladbytsyuk.weatherforecastproject.controller.ResourceHelper;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.view.FormatWeather;
 import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
@@ -45,18 +46,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbarAndNavigationDrawerInit();
-
         exitNow = false;
-        FormatWeather.setContext(this);
-        PreferencesHelper.setContext(this);
-        NetworkHelper.setContext(this);
-        initSharedPreferences();
 
-        settingsFragment = new SettingsFragment();
-        infoFragment = new InfoFragment();
-        weatherForecastFragment = new WeatherForecastFragment();
-        detailWeatherForecastFragment = new DetailWeatherForecastFragment();
+        toolbarAndNavigationDrawerInit();
+        setContexts();
+        initSharedPreferences();
+        initFragments();
 
         setWeatherForecastFragment();
 
@@ -76,6 +71,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void setContexts() {
+        FormatWeather.setContext(this);
+        PreferencesHelper.setContext(this);
+        NetworkHelper.setContext(this);
+        ResourceHelper.setContext(this);
+    }
+
     private void initSharedPreferences() {
         if (PreferencesHelper.getPreference(R.string.metric) == null) {
             PreferencesHelper.setPreference(R.string.metric, getString(R.string.celsium));
@@ -87,6 +89,13 @@ public class MainActivity extends AppCompatActivity
                 PreferencesHelper.setPreference(R.string.city, "Rostov");
             }
         }
+    }
+
+    private void initFragments() {
+        settingsFragment = new SettingsFragment();
+        infoFragment = new InfoFragment();
+        weatherForecastFragment = new WeatherForecastFragment();
+        detailWeatherForecastFragment = new DetailWeatherForecastFragment();
     }
 
 
@@ -156,7 +165,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    /* ======================================== setFragment ========================================= */
+/* ======================================== setFragment ========================================= */
     private void setWeatherForecastFragment() {
         setCurrentFragment(weatherForecastFragment);
         isWeatherForecastFragmentActive = true;
@@ -205,7 +214,8 @@ public class MainActivity extends AppCompatActivity
 
     public void showNetworkIssuesSnackbar() {
         Snackbar snackbar = Snackbar
-                .make(findViewById(R.id.main_container), R.string.download_error, Snackbar.LENGTH_LONG)
+                .make(findViewById(R.id.main_container),
+                        R.string.download_error, Snackbar.LENGTH_LONG)
                 .setAction(R.string.update, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

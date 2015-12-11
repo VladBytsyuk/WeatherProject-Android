@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.ResourceHelper;
 import com.vladbytsyuk.weatherforecastproject.model.DayTimeWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.view.FormatWeather;
@@ -25,10 +26,18 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
     public DetailWeatherForecastAdapter(Context context, WeatherForecast weatherForecast) {
         this.context = context;
         ArrayList<DayTimeWeatherForecast> buf = new ArrayList<>();
-        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.morning_time), weatherForecast.getTemperature().getMorningTemperature()));
-        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.day_time), weatherForecast.getTemperature().getDayTemperature()));
-        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.evening_time), weatherForecast.getTemperature().getEveningTemperature()));
-        buf.add(new DayTimeWeatherForecast(context.getResources().getString(R.string.night_time), weatherForecast.getTemperature().getNightTemperature()));
+        buf.add(new DayTimeWeatherForecast(ResourceHelper.getString(R.string.morning_time),
+                weatherForecast.getTemperature().getMorningTemperature()));
+
+        buf.add(new DayTimeWeatherForecast(ResourceHelper.getString(R.string.day_time),
+                weatherForecast.getTemperature().getDayTemperature()));
+
+        buf.add(new DayTimeWeatherForecast(ResourceHelper.getString(R.string.evening_time),
+                weatherForecast.getTemperature().getEveningTemperature()));
+
+        buf.add(new DayTimeWeatherForecast(ResourceHelper.getString(R.string.night_time),
+                weatherForecast.getTemperature().getNightTemperature()));
+
         this.dayTimeWeatherForecasts = buf;
     }
 
@@ -43,9 +52,11 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewDetailTemperature.setText(FormatWeather.temperatureToString(getItem(position).getTempeature()));
+        viewHolder.textViewDetailTemperature
+                .setText(FormatWeather.temperatureToString(getItem(position).getTempeature()));
 
-        viewHolder.imageViewDetailDescription.setImageResource(FormatWeather.getDayTimeIcon(position));
+        viewHolder.imageViewDetailDescription
+                .setImageResource(FormatWeather.getDayTimeIcon(position));
         viewHolder.textViewDetailDayTime.setText(getItem(position).getDayTime());
         return convertView;
     }
@@ -67,9 +78,15 @@ public class DetailWeatherForecastAdapter extends BaseAdapter {
 
     private ViewHolder viewHolderInit(View convertView) {
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.textViewDetailTemperature = (TextView) convertView.findViewById(R.id.textViewDetailMaxTemperature);
-        viewHolder.imageViewDetailDescription = (ImageView) convertView.findViewById(R.id.imageViewDetailDescription);
-        viewHolder.textViewDetailDayTime = (TextView) convertView.findViewById(R.id.textViewDetailDayTime);
+        viewHolder.textViewDetailTemperature = (TextView) convertView
+                .findViewById(R.id.textViewDetailMaxTemperature);
+
+        viewHolder.imageViewDetailDescription = (ImageView) convertView
+                .findViewById(R.id.imageViewDetailDescription);
+
+        viewHolder.textViewDetailDayTime = (TextView) convertView
+                .findViewById(R.id.textViewDetailDayTime);
+
         return viewHolder;
     }
 

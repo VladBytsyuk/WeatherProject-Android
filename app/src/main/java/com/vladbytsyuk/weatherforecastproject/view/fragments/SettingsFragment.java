@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.vladbytsyuk.weatherforecastproject.R;
 import com.vladbytsyuk.weatherforecastproject.controller.PreferencesHelper;
+import com.vladbytsyuk.weatherforecastproject.controller.ResourceHelper;
 
 /**
  * Created by VladBytsyuk on 22.11.2015.
@@ -57,13 +58,13 @@ public class SettingsFragment extends Fragment {
     }
     private View spinnerMetricInit(View rootView) {
         spinnerMetric = (Spinner) rootView.findViewById(R.id.spinnerSettingsMetric);
-        final String[] metrics = getResources().getStringArray(R.array.metrics);
+        final String[] metrics = ResourceHelper.getStringArray(R.array.metrics);
         final ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, metrics);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMetric.setAdapter(adapter);
-        spinnerMetric.setPrompt(getResources().getString(R.string.metric_title));
-        if (PreferencesHelper.getPreference(R.string.metric).equals(getString(R.string.celsium))) {
+        spinnerMetric.setPrompt(ResourceHelper.getString(R.string.metric_title));
+        if (PreferencesHelper.getPreference(R.string.metric).equals(ResourceHelper.getString(R.string.celsium))) {
             spinnerMetric.setSelection(0);
         } else {
             spinnerMetric.setSelection(1);
@@ -73,9 +74,9 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String currentMetric = adapter.getItem(position);
                 if (currentMetric.equals(metrics[0])) {
-                    PreferencesHelper.setPreference(R.string.metric, getActivity().getString(R.string.celsium));
+                    PreferencesHelper.setPreference(R.string.metric, ResourceHelper.getString(R.string.celsium));
                 } else {
-                    PreferencesHelper.setPreference(R.string.metric, getActivity().getString(R.string.farenheit));
+                    PreferencesHelper.setPreference(R.string.metric, ResourceHelper.getString(R.string.farenheit));
                 }
             }
 

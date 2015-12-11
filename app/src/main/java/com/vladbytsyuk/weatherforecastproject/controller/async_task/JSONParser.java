@@ -2,6 +2,8 @@ package com.vladbytsyuk.weatherforecastproject.controller.async_task;
 
 import android.util.Log;
 
+import com.vladbytsyuk.weatherforecastproject.R;
+import com.vladbytsyuk.weatherforecastproject.controller.ResourceHelper;
 import com.vladbytsyuk.weatherforecastproject.model.DetailWeatherForecast;
 import com.vladbytsyuk.weatherforecastproject.model.Temperature;
 import com.vladbytsyuk.weatherforecastproject.model.WeatherForecast;
@@ -62,6 +64,7 @@ public class JSONParser {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d(ResourceHelper.getString(R.string.log_tag), "Parsing error\n" + e.toString());
         }
 
         return weatherForecasts;

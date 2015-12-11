@@ -52,19 +52,33 @@ public class WeatherForecastAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textViewMaxTemperature.setText(FormatWeather.temperatureToString(getItem(position).getTemperature().getMaxTemperature()));
-        viewHolder.textViewMinTemperature.setText(FormatWeather.temperatureToString(getItem(position).getTemperature().getMinTemperature()));
-        viewHolder.imageViewDescription.setImageResource(FormatWeather.getWeatherIcon(getItem(position)));
+        viewHolder.textViewMaxTemperature.setText(FormatWeather
+                .temperatureToString(getItem(position).getTemperature().getMaxTemperature()));
+
+        viewHolder.textViewMinTemperature.setText(FormatWeather
+                .temperatureToString(getItem(position).getTemperature().getMinTemperature()));
+
+        viewHolder.imageViewDescription.setImageResource(FormatWeather
+                .getWeatherIcon(getItem(position)));
         viewHolder.textViewDate.setText(FormatWeather.getDate(getItem(position).getDay()));
+
         return convertView;
     }
 
     private ViewHolder viewHolderInit(View convertView) {
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.textViewMaxTemperature = (TextView) convertView.findViewById(R.id.textViewWFMaxTemperature);
-        viewHolder.textViewMinTemperature = (TextView) convertView.findViewById(R.id.textViewWFMinTemperature);
-        viewHolder.imageViewDescription = (ImageView) convertView.findViewById(R.id.imageViewWFDescription);
-        viewHolder.textViewDate = (TextView) convertView.findViewById(R.id.textViewWFDate);
+        viewHolder.textViewMaxTemperature = (TextView) convertView
+                .findViewById(R.id.textViewWFMaxTemperature);
+
+        viewHolder.textViewMinTemperature = (TextView) convertView
+                .findViewById(R.id.textViewWFMinTemperature);
+
+        viewHolder.imageViewDescription = (ImageView) convertView
+                .findViewById(R.id.imageViewWFDescription);
+
+        viewHolder.textViewDate = (TextView) convertView
+                .findViewById(R.id.textViewWFDate);
+
         return viewHolder;
     }
 

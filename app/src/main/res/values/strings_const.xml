@@ -24,4 +24,6 @@
     <string name="humidity">hum</string>
 
     <string name="e_mail">vladislav.bytsyuk@gmail.com</string>
+
+    <string name="log_tag">DEV_LOG</string>
 </resources>

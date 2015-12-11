@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by BVS on 28.11.2015.
  */
 public class DBManager extends SQLiteOpenHelper {
-    Context context;
+    private Context context;
 
     private String tableName;
     private String day;
@@ -38,36 +38,30 @@ public class DBManager extends SQLiteOpenHelper {
 
 
     public DBManager(Context context) {
-        super(context, context.getResources().getString(R.string.db_name), null, 1);
+        super(context, ResourceHelper.getString(R.string.db_name), null, 1);
         this.context = context;
-        tableName = getString(R.string.db_name);
+        tableName = ResourceHelper.getString(R.string.db_name);
         setColumnTitles();
     }
 
     private void setColumnTitles() {
-        day = getString(R.string.day);
-        morningTemperature = getString(R.string.morning_temperature);
-        dayTemperature = getString(R.string.day_temperature);
-        eveningTemperature = getString(R.string.evening_temperature);
-        nightTemperature = getString(R.string.night_temperature);
-        minTemperature = getString(R.string.min_temperature);
-        maxTemperature = getString(R.string.max_temperature);
-        icon = getString(R.string.icon);
-        description = getString(R.string.description);
-        windSpeed = getString(R.string.wind_speed);
-        windDirection = getString(R.string.wind_direction);
-        pressure = getString(R.string.pressure);
-        humidity = getString(R.string.humidity);
-    }
-
-    private String getString(int id) {
-        return context.getResources().getString(id);
+        day = ResourceHelper.getString(R.string.day);
+        morningTemperature = ResourceHelper.getString(R.string.morning_temperature);
+        dayTemperature = ResourceHelper.getString(R.string.day_temperature);
+        eveningTemperature = ResourceHelper.getString(R.string.evening_temperature);
+        nightTemperature = ResourceHelper.getString(R.string.night_temperature);
+        minTemperature = ResourceHelper.getString(R.string.min_temperature);
+        maxTemperature = ResourceHelper.getString(R.string.max_temperature);
+        icon = ResourceHelper.getString(R.string.icon);
+        description = ResourceHelper.getString(R.string.description);
+        windSpeed = ResourceHelper.getString(R.string.wind_speed);
+        windDirection = ResourceHelper.getString(R.string.wind_direction);
+        pressure = ResourceHelper.getString(R.string.pressure);
+        humidity = ResourceHelper.getString(R.string.humidity);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //tableName = getString(R.string.db_name);
-        //setColumnTitles();
         db.execSQL("create table " + tableName +
                         "(id integer primary key autoincrement, " +
                         day + " text, " +
@@ -117,6 +111,8 @@ public class DBManager extends SQLiteOpenHelper {
             fillDataBase(weatherForecasts);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d(ResourceHelper.getString(R.string.log_tag), "WeatherForecast array wasn't formed\n"
+                    + e.toString());
         }
     }
 
@@ -177,13 +173,24 @@ public class DBManager extends SQLiteOpenHelper {
                 Integer windDirectionValue = c.getInt(windDirectionColumnIndex);
                 Integer pressureValue = c.getInt(pressureColumnIndex);
                 Integer humidityValue = c.getInt(humidityColumnIndex);
-                Temperature temperatureValue = new Temperature(morningTemperatureValue,
-                        dayTemperatureValue, eveningTemperatureValue, nightTemperatureValue,
-                        minTemperatureValue, maxTemperatureValue);
-                DetailWeatherForecast detailValue = new DetailWeatherForecast(windSpeedValue,
-                        windDirectionValue, pressureValue, humidityValue);
-                WeatherForecast currentWeatherForecast = new WeatherForecast(dateValue,
-                        temperatureValue, iconValue, descriptionValue, detailValue);
+                Temperature temperatureValue =
+                        new Temperature(morningTemperatureValue,
+                                        dayTemperatureValue,
+                                        eveningTemperatureValue,
+                                        nightTemperatureValue,
+                                        minTemperatureValue,
+                                        maxTemperatureValue);
+                DetailWeatherForecast detailValue =
+                        new DetailWeatherForecast(windSpeedValue,
+                                                  windDirectionValue,
+                                                  pressureValue,
+                                                  humidityValue);
+                WeatherForecast currentWeatherForecast =
+                        new WeatherForecast(dateValue,
+                                            temperatureValue,
+                                            iconValue,
+                                            descriptionValue,
+                                            detailValue);
                 weatherForecasts.add(currentWeatherForecast);
             } while (c.moveToNext());
         }

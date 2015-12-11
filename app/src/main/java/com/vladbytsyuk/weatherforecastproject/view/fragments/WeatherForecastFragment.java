@@ -70,16 +70,22 @@ public class WeatherForecastFragment extends Fragment
         if (dbManager.isDBEmpty())
             dbManager.downloadWeather();
 
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayoutWeatherForecast);
+
+        rootView = initSwipeRefreshLayout(rootView);
+        rootView = initListView(rootView);
+        rootView = initTextView(rootView);
+
+        return rootView;
+    }
+
+    private View initSwipeRefreshLayout(View rootView) {
+        swipeRefreshLayout =
+                (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayoutWeatherForecast);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_blue_dark,
                 android.R.color.holo_blue_bright);
-
-        rootView = initListView(rootView);
-        rootView = initTextView(rootView);
-
         return rootView;
     }
 
