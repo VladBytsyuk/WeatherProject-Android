@@ -27,7 +27,7 @@ public class JSONDownloader {
                                 "&lang=" + lang +
                                 "&type=" + "accurate" +
                                 "&cnt=" + "14" +
-                                "&appid=" + "2de143494c0b295cca9337e1e96b00e0");
+                                "&appid=" + "b3e38952e1b39781acec4353f17885f5");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setReadTimeout(10000 /* milliseconds */);
