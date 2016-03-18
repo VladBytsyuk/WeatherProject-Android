@@ -58,6 +58,6 @@
     <string name="presssure_units">мм рт. ст.</string>
 
     <string name="thanks">Спасибо за использование моего приложения.</string>
-    <string name="information">Это приложение показывает Вам погоду.</string>
+    <string name="information">Это приложение показывает Вам погоду. \nДанные из openweather.org.</string>
 
 </resources>

@@ -103,9 +103,9 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     public void downloadWeather() {
-        ArrayList<WeatherForecast> weatherForecasts;
         WeatherDownloader weatherDownloader = new WeatherDownloader();
         weatherDownloader.execute(context);
+        ArrayList<WeatherForecast> weatherForecasts;
         try {
             weatherForecasts = weatherDownloader.get();
             fillDataBase(weatherForecasts);

@@ -7,10 +7,10 @@
         android:id="@+id/textViewInfoDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewInfoThanks"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp"
-        android:text="@string/information" />
+        android:text="@string/information"
+        android:gravity="center"
+        android:layout_below="@+id/imageViewInfo"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textViewInfoVersion"
@@ -42,11 +42,10 @@
 
     <ImageView
         android:id="@+id/imageViewInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewInfoDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/icon" />
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@drawable/icon"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

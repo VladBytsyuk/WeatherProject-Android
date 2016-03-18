@@ -57,5 +57,5 @@
     <string name="presssure_units">hPa</string>
 
     <string name="thanks">Thank you for use my application.</string>
-    <string name="information">This application show weather to you.</string>
+    <string name="information">This application show weather to you. \nData from openweather.org.</string>
 </resources>
